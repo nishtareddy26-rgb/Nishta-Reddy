@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maheeth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4e1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Poppins", sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      border-radius: 25px;
+      padding: 40px;
+      max-width: 520px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: fadeIn 1.8s ease;
+    }
+
+    h1 {
+      font-family: "Great Vibes", cursive;
+      font-size: 48px;
+      color: #e63946;
+    }
+
+    p {
+      font-size: 16px;
+      color: #444;
+      margin: 20px 0 30px;
+      line-height: 1.6;
+    }
+
+    h2 {
+      color: #e63946;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    button {
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .yes {
+      background: #e63946;
+      color: white;
+      position: relative;
+    }
+
+    .no {
+      background: #ddd;
+      color: #555;
+      position: relative;
+    }
+
+    .hearts span {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 18px;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(100vh) scale(0.6);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .final {
+      display: none;
+      animation: fadeIn 1.5s ease;
+    }
+
+    iframe {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Music: Best Part - Daniel Caesar -->
+  <iframe
+    src="https://www.youtube.com/embed/hKgl5-lkT8U?autoplay=1&loop=1&playlist=hKgl5-lkT8U"
+    allow="autoplay">
+  </iframe>
+
+  <div class="hearts"></div>
+
+  <!-- MAIN QUESTION -->
+  <div class="card" id="question">
+    <h1>Maheeth</h1>
+    <p>
+      I know you are an idiot but you just make me laugh.<br><br>
+      Even though you're hella cringe,<br>
+      I wanna ask you something.
+    </p>
+
+    <h2>So will you be my boyfriend?</h2>
+
+    <div class="buttons">
+      <button class="yes" onmouseover="moveYes()" onclick="yesClicked()">Yes</button>
+      <button class="no" onmouseover="moveNo()">No</button>
+    </div>
+  </div>
+
+  <!-- FINAL SCREEN -->
+  <div class="card final" id="final">
+    <h1>Good choice</h1>
+    <p>
+      I know that you'd obviously say yes.<br>
+      ugh anyways I love you too idiot.
+    </p>
+  </div>
+
+  <script>
+    let yesMoves = 0;
+    let sureStage = 0;
+
+    const sureTexts = [
+      "Are you sure?",
+      "Like, really sure?",
+      "This is your last chance",
+      "Okay fine, I believe you"
+    ];
+
+    function moveYes() {
+      const btn = document.querySelector(".yes");
+      if (yesMoves < 4) {
+        yesMoves++;
+        const x = Math.random() * 300 - 150;
+        const y = Math.random() * 200 - 100;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      }
+    }
+
+    function yesClicked() {
+      const title = document.querySelector("#question h2");
+
+      if (sureStage < sureTexts.length - 1) {
+        title.innerText = sureTexts[sureStage];
+        sureStage++;
+        moveYes();
+      } else {
+        showFinal();
+      }
+    }
+
+    function moveNo() {
+      const btn = document.querySelector(".no");
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function showFinal() {
+      document.getElementById("question").style.display = "none";
+      document.getElementById("final").style.display = "block";
+      createHearts();
+    }
+
+    function createHearts() {
+      const hearts = document.querySelector(".hearts");
+      setInterval(() => {
+        const span = document.createElement("span");
+        span.innerHTML = "❤";
+        span.style.left = Math.random() * 100 + "vw";
+        hearts.appendChild(span);
+        setTimeout(() => span.remove(), 6000);
+      }, 350);
+    }
+  </script>
+
+</body>
+</html>
